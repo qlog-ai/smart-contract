@@ -4,6 +4,7 @@ pragma solidity ^0.8.19;
 import {FunctionsClient} from "@chainlink/contracts/src/v0.8/functions/dev/v1_0_0/FunctionsClient.sol";
 import {ConfirmedOwner} from "@chainlink/contracts/src/v0.8/shared/access/ConfirmedOwner.sol";
 import {FunctionsRequest} from "@chainlink/contracts/src/v0.8/functions/dev/v1_0_0/libraries/FunctionsRequest.sol";
+import {LinkTokenInterface} from "@chainlink/contracts/src/v0.8/shared/interfaces/LinkTokenInterface.sol";
 
 /**
  * @title Chainlink Functions example on-demand consumer contract example
@@ -16,6 +17,8 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
   bytes32 public s_lastRequestId;
   bytes public s_lastResponse;
   bytes public s_lastError;
+  bytes32 internal sourceHash;
+  address internal immutable linkAddress = 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846;
 
   constructor(address router, bytes32 _donId) FunctionsClient(router) ConfirmedOwner(msg.sender) {
     donId = _donId;
@@ -59,6 +62,23 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
       req.setBytesArgs(bytesArgs);
     }
     s_lastRequestId = _sendRequest(req.encodeCBOR(), subscriptionId, callbackGasLimit, donId);
+  }
+
+  /**
+   * @notice Witdraws LINK from the contract to the Owner
+   */
+  function withdrawLinkOwner() external onlyOwner {
+    LinkTokenInterface link = LinkTokenInterface(linkAddress);
+    require(link.transfer(msg.sender, link.balanceOf(address(this))), "Forbidden to transfer link to non-owner");
+  }
+
+  /**
+   * @notice Allows the source hash to be updated
+   *
+   * @param newSourceHash New source hash
+   */
+  function updateSourceHash(bytes32 newSourceHash) external onlyOwner {
+    sourceHash = newSourceHash;
   }
 
   /**

@@ -1,32 +1,16 @@
 # Chainlink Functions Starter Kit
 
-- [Chainlink Functions Starter Kit](#chainlink-functions-starter-kit)
-- [Overview](#overview)
-- [Motivation](#motivation)
-  - [Supported Networks](#supported-networks)
-    - [Mainnets](#mainnets)
-    - [Testnets](#testnets)
-- [For Beginners](#for-beginners)
-  - [Tutorials \& examples](#tutorials--examples)
-- [Quickstart](#quickstart)
-  - [Requirements](#requirements)
-  - [Steps on live testnet](#steps-on-live-testnet)
-  - [Steps on local testnet](#steps-on-local-testnet)
-- [Environment Variable Management](#environment-variable-management)
-  - [Using Remote Secrets (e.g. Github Gists)](#using-remote-secrets-eg-github-gists)
-  - [Environment Variable Management Commands](#environment-variable-management-commands)
-- [Functions Command Glossary](#functions-command-glossary)
-  - [Functions Commands](#functions-commands)
-  - [Functions Subscription Management Commands](#functions-subscription-management-commands)
-- [Request Configuration](#request-configuration)
-  - [JavaScript Code](#javascript-code)
-    - [Functions Library](#functions-library)
-  - [Modifying Contracts](#modifying-contracts)
-  - [Local Simulations with the `localFunctionsTestnet`](#local-simulations-with-the-localfunctionstestnet)
-  - [Managing Secrets](#managing-secrets)
-- [Automation Integration](#automation-integration)
-- [Gas Spikes](#gas-spikes)
-- [Troubleshooting](#troubleshooting)
+```
+npx hardhat functions-deploy-consumer --network avalancheFuji --verify true
+```
+
+```
+npx hardhat functions-sub-create --network avalancheFuji --amount 0.5 --contract 0x46AC3Aa47E1904808A127A4f16B6f32d153042A3
+```
+
+```
+npx hardhat functions-request --network avalancheFuji --contract 0x46AC3Aa47E1904808A127A4f16B6f32d153042A3 --subid 41
+```
 
 # Overview
 
@@ -102,10 +86,10 @@ Install **both** of the following:
    - `API-request-example.js` contains example JavaScript code which fetches data from APIs before processing the data <br><br>
 6. Locally simulate the execution of your JavaScript source by running `npx hardhat functions-simulate-script`
 
-7. Deploy and verify the consumer contract to an actual blockchain network by running `npx hardhat functions-deploy-consumer --network network_name_here --verify true`<br>**Note**: Make sure `<explorer>_API_KEY` is set if using `--verify true` depending on which network is used.<br><br>
-8. Create and fund a new Functions billing subscription using the [Chainlink Functions UI](https://functions.chain.link) and add the deployed consumer contract as an authorized consumer to your subscription. You can also do this programmatically with `npx hardhat functions-sub-create --network network_name_here --amount LINK_funding_amount_here --contract 0x_deployed_client_contract_address_here`<br>**Note**: Ensure your wallet has a sufficient LINK balance before running this command. Testnet LINK can be obtained at <a href="https://faucets.chain.link/">faucets.chain.link</a>. Also make a note of your subscription Id as you will need it for most commands.<br>
+7. Deploy and verify the consumer contract to an actual blockchain network by running `npx hardhat functions-deploy-consumer --network avalancheFuji --verify true`<br>**Note**: Make sure `<explorer>_API_KEY` is set if using `--verify true` depending on which network is used.<br><br>
+8. Create and fund a new Functions billing subscription using the [Chainlink Functions UI](https://functions.chain.link) and add the deployed consumer contract as an authorized consumer to your subscription. You can also do this programmatically with `npx hardhat functions-sub-create --network avalancheFuji --amount 0.5 --contract 0x_deployed_client_contract_address_here`<br>**Note**: Ensure your wallet has a sufficient LINK balance before running this command. Testnet LINK can be obtained at <a href="https://faucets.chain.link/">faucets.chain.link</a>. Also make a note of your subscription Id as you will need it for most commands.<br>
 
-9. Make an on-chain request by running:<br>`npx hardhat functions-request --network network_name_here --contract 0xDeployed_client_contract_address_here --subid subscription_id_number_here`. You will see a confirmation request, so hit `Y` and press enter. Once the request is fulfilled the console will show the response (decoded into the relevant return type) from the execution of your custom JS script.
+9. Make an on-chain request by running:<br>`npx hardhat functions-request --network avalancheFuji --contract 0x0249cD4Ba28a8fac5CF7C55E7B7274BB49b38902 --subid 36`. You will see a confirmation request, so hit `Y` and press enter. Once the request is fulfilled the console will show the response (decoded into the relevant return type) from the execution of your custom JS script.
 
 10. You can also query the response that was stored in your Functions Consumer contract by runnning `npx hardhat functions-read --contract 0xConsumer_contract_address --network  your_network_name`
 
