@@ -206,7 +206,7 @@ task("functions-request", "Initiates an on-demand request from a Functions consu
     }
 
     // Listen for fulfillment
-    const requestId = requestTxReceipt.events[2].args.id
+    const requestId = requestTxReceipt.events[6].args.id
     spinner.start(
       `Request ${requestId} has been initiated. Waiting for fulfillment from the Decentralized Oracle Network...\n`
     )
