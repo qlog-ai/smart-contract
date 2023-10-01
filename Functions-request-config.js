@@ -15,11 +15,11 @@ const requestConfig = {
   // Optional if secrets are expected in the sourceLocation of secrets (only Remote or DONHosted is supported)
   secretsLocation: Location.DONHosted,
   // Args (string only array) can be accessed within the source code with `args[index]` (ie: args[0]).
-  args: ["0x123i213", "0x3213123123"],
+  args: ["0x123i213", "0xF4E20531CD11Fb8b70896AA9710FeDbEb9be87c3"],
   // Code language (only JavaScript is currently supported)
   codeLanguage: CodeLanguage.JavaScript,
   // Expected type of the returned value
-  expectedReturnType: ReturnType.uint256,
+  expectedReturnType: ReturnType.string,
 }
 
 module.exports = requestConfig

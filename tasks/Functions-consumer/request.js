@@ -190,7 +190,7 @@ task("functions-request", "Initiates an on-demand request from a Functions consu
       requestConfig.source,
       requestConfig.secretsLocation,
       encryptedSecretsReference,
-      requestConfig.args ?? [],
+      requestConfig.args ?? ["0xjkakwljfskdlfjasklf", "0xF4E20531CD11Fb8b70896AA9710FeDbEb9be87c3"],
       subscriptionId,
       callbackGasLimit,
       hre.ethers.utils.parseEther("1"),

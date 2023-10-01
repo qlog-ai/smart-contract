@@ -15,7 +15,6 @@ function httpRequest(url, headers, data, retries = 4) {
     // Timeout 9000ms is because of the chainlink service limits
     Functions.makeHttpRequest({ url, headers, method: "GET", timeout: 9000 })
       .then((response) => {
-        console.log(response)
         if (response.statusText === "OK") {
           resolve(response.data)
         } else if (retries > 0) {
@@ -45,16 +44,15 @@ function httpRequest(url, headers, data, retries = 4) {
 }
 
 const purchaseDataset = httpRequest(
-  // `http://localhost:5173/api/purchase-dataset/${purchaseWalletAddress}/${datasetAddress}`,
-  `https://qlog.ai/api/purchase-dataset/${purchaseWalletAddress}/${datasetAddress}`,
+  `http://localhost:5173/api/purchase-dataset/${purchaseWalletAddress}/${datasetAddress}`,
+  //   `https://qlog.ai/api/purchase-dataset/${purchaseWalletAddress}/${datasetAddress}`,
   {
     Authorization: `Bearer ${secrets.bearerToken}`,
     "Content-Type": "application/json",
   }
 )
   .then((data) => {
-    console.log(data)
-    return Functions.encodeUint256(data.questions)
+    return Functions.encodeString(data.cid)
   })
   .catch((error) => console.error(error))
 

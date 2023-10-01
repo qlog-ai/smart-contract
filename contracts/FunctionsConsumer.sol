@@ -11,6 +11,7 @@ import {IERC1363} from "@openzeppelin/contracts/interfaces/IERC1363.sol";
 error QLog_LinkAmountToLow();
 error QLog_payLinkForDatasetFailed();
 error QLog_payLinkForRegistryFailed();
+error QLog_refundFailedContactUs();
 
 /**
  * @title Chainlink Functions example on-demand consumer contract example
@@ -30,8 +31,6 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
   uint256 internal constant LINK_DIVISIBILITY = 10 ** 18;
 
   mapping(bytes32 => address) public requestWalletAddress;
-  mapping(bytes32 => address) public requestDatasetAddress;
-  mapping(address => uint256) public requestDatasetBalance;
   mapping(bytes32 => uint256) public requestLinkAmount;
 
   constructor(address router, bytes32 _donId) FunctionsClient(router) ConfirmedOwner(msg.sender) {
@@ -74,7 +73,7 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
     bool success2 = IERC1363(linkAddress).transferAndCall(
       linkBillingProxyAddress,
       // This is more than enough to cover the current fees 0.2 LINK + transaction cost + variable (depending on gas)
-      LINK_DIVISIBILITY / 2,
+      LINK_DIVISIBILITY / 3,
       abi.encode(subscriptionId)
     );
     if (!success2) revert QLog_payLinkForRegistryFailed();
@@ -87,6 +86,8 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
       req.setArgs(args);
     }
     s_lastRequestId = _sendRequest(req.encodeCBOR(), subscriptionId, callbackGasLimit, donId);
+    requestWalletAddress[s_lastRequestId] = msg.sender;
+    requestLinkAmount[s_lastRequestId] = linkAmount;
   }
 
   /**
@@ -114,6 +115,17 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
    * Either response or error parameter will be set, but never both
    */
   function fulfillRequest(bytes32 requestId, bytes memory response, bytes memory err) internal override {
+    if (err.length > 0) {
+      // Refund link
+      bool success = IERC20(linkAddress).transferFrom(
+        address(this),
+        requestWalletAddress[requestId],
+        requestLinkAmount[requestId]
+      );
+      if (!success) revert QLog_refundFailedContactUs();
+    }
+
+    // for debugging purposes, should be removed later
     s_lastResponse = response;
     s_lastError = err;
   }
