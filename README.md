@@ -29,10 +29,10 @@ Approve LINK for your deployed contract https://testnet.snowtrace.io/token/0x0b9
 npx hardhat functions-request --network avalancheFuji --contract 0x88b9BB23d84C4F5Ebbb2E257e8C7882Af60Ea281 --subid 48 --callbackgaslimit 300000
 ```
 
-Awesome great success: 
+Awesome great success:
 
 https://testnet.snowtrace.io/tx/0xd47bcd5554a8b559666faa113726249ee990155051438dffeb308582abe6f370
 
-Deployed verified contract that uses Chainlink Functions: 
+Deployed verified contract that uses Chainlink Functions:
 
 https://testnet.snowtrace.io/address/0x88b9BB23d84C4F5Ebbb2E257e8C7882Af60Ea281#writeContract
