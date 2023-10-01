@@ -191,9 +191,9 @@ task("functions-request", "Initiates an on-demand request from a Functions consu
       requestConfig.secretsLocation,
       encryptedSecretsReference,
       requestConfig.args ?? [],
-      requestConfig.bytesArgs ?? [],
       subscriptionId,
       callbackGasLimit,
+      hre.ethers.utils.parseEther("1"),
       overrides
     )
     const requestTxReceipt = await requestTx.wait(1)

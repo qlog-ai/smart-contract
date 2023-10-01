@@ -5,11 +5,11 @@ npx hardhat functions-deploy-consumer --network avalancheFuji --verify true
 ```
 
 ```
-npx hardhat functions-sub-create --network avalancheFuji --amount 0.5 --contract 0x46AC3Aa47E1904808A127A4f16B6f32d153042A3
+npx hardhat functions-sub-create --network avalancheFuji --amount 0.5 --contract 0xE37Eb88Cfca1e56987fc0Af6AA5FF274eaB58564
 ```
 
 ```
-npx hardhat functions-request --network avalancheFuji --contract 0x46AC3Aa47E1904808A127A4f16B6f32d153042A3 --subid 41
+npx hardhat functions-request --network avalancheFuji --contract 0xE37Eb88Cfca1e56987fc0Af6AA5FF274eaB58564 --subid 42
 ```
 
 # Overview
