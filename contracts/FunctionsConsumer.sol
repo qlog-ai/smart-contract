@@ -27,7 +27,7 @@ contract FunctionsConsumer is FunctionsClient, ConfirmedOwner {
   bytes32 internal sourceHash;
 
   address internal immutable linkAddress = 0x0b9d5D9136855f6FEc3c0993feE6E9CE8a297846;
-  address internal immutable linkBillingProxyAddress = 0x65Dcc24F8ff9e51F10DCc7Ed1e4e2A61e6E14bd6;
+  address internal immutable linkBillingProxyAddress = 0xA9d587a00A31A52Ed70D6026794a8FC5E2F5dCb0;
   uint256 internal constant LINK_DIVISIBILITY = 10 ** 18;
 
   mapping(bytes32 => address) public requestWalletAddress;
